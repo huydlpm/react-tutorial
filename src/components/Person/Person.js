@@ -5,7 +5,7 @@ const Person = (props) => {
     color: "blue",
     fontWeight: "bold",
   };
-  
+
   return (
     <div style={style} className="person">
       <p onClick={props.click}>

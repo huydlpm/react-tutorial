@@ -1,12 +1,20 @@
 import "./App.css";
 import Person from "./components/Person/Person";
+import Product from "./components/Product/Product";
 import Example from "./components/Example";
 import { useState } from "react";
 
 function App() {
+  const [showPerson, setShowPerson] = useState(false);
+
   const [person, setPersons] = useState([
     { name: "Đặng Lê Huy", age: 26 },
     { name: "Đặng Hải An", age: 20 },
+  ]);
+
+  const [products, setProduct] = useState([
+    { name: "Tôm", price: 100 },
+    { name: "Cá", price: 100 },
   ]);
 
   const changePersonName = (e) => {
@@ -23,26 +31,39 @@ function App() {
     ]);
   };
 
+  const toogleName = () => {
+    setShowPerson(!showPerson);
+  };
+
+  let personList = null;
+
+  if (showPerson) {
+    personList = (
+      <div>
+        {person.map((item) => {
+          return (
+            <Person
+              click={changePersonName}
+              name={item.name}
+              age={item.age}
+              changeTxt={changeName}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <h3>Wellcome, Create react app!</h3>
-      <button onClick={() => changePersonName()}>Change Name</button>
+      <button onClick={() => toogleName()}>Toogle Name</button>
       <p>This is a person</p>
-      <Person
-        click={changePersonName}
-        name={person[0].name}
-        age={person[0].age}
-        changeTxt={changeName}
-      >
-        My hobbies is football
-      </Person>
-      <Person
-        click={changePersonName}
-        name={person[1].name}
-        age={person[1].age}
-        changeTxt={changeName}
-      />
+      {personList}
+      <hr />
       <Example />
+      <hr />
+      <Product data={products} />
     </div>
   );
 }
